@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     public UIManager uiManagerScript;
 
+    public ParticleSystem engineParticle;
+    public ParticleSystem explosionParticle;
+
 
     //Movement and bounds
     public float horizontalInput;
@@ -33,7 +36,9 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         mainCam = FindObjectOfType<Camera>();
         uiManagerScript = GameObject.Find("UI Manager").GetComponent<UIManager>();
-        
+
+        engineParticle.Play();
+
 
     }
     void Update()
@@ -140,8 +145,9 @@ public class PlayerController : MonoBehaviour
             if (health <= 0)
             {
                 //destroy game object
-                Destroy(gameObject);
-                uiManagerScript.gameOver();
+                explosionParticle.Play();
+
+                StartCoroutine(DeathAfterExplosionDuration());
             }
            
         }
@@ -161,9 +167,17 @@ public class PlayerController : MonoBehaviour
     }
 
     //IENUMERATOR
-    IEnumerator PowerupCountdownRoutine() {
+    IEnumerator PowerupCountdownRoutine()
+    {
         //waits for 15 seconds and sets powerup to false.
         yield return new WaitForSeconds(15);
         hasPowerup = false;
+    }
+
+    IEnumerator DeathAfterExplosionDuration()
+    {
+        yield return new WaitForSeconds(explosionParticle.main.duration);
+        Destroy(gameObject);
+        uiManagerScript.gameOver();
     }
 }
