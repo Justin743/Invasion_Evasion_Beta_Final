@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    
     //importing UImanager for score
     private UIManager uiManagerScript;
     public float speed = 2.0f;
@@ -19,14 +20,22 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
         //Finds the UI manager script 
         uiManagerScript = GameObject.Find("UI Manager").GetComponent<UIManager>();
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         //Enemy movment
-        Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-        enemyRB.AddForce(lookDirection * speed);
+       // Vector3 lookDirection = (player.transform.position - transform.position).normalized;
+
+        transform.LookAt(player.transform);
+
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+        
 
     }
     private void OnTriggerEnter(Collider other)

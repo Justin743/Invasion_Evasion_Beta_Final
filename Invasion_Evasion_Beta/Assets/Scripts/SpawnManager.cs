@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefab;
     public GameObject powerUpPrefab;
     public UIManager uiManager;
 
@@ -106,10 +106,12 @@ public class SpawnManager : MonoBehaviour
     //Method for spawning enemy waves
     void SpawnEnemyWave(int enemiesToSpawn) 
     {
+       
         //The enemies spawn and the amount depends on the wave number
         for(int i = 0; i < enemiesToSpawn; i++)
         {
-            Instantiate(enemyPrefab, GenerateEnemySpawnPos() , enemyPrefab.transform.rotation);
+            int enemyIndex = Random.Range(0, enemyPrefab.Length);
+            Instantiate(enemyPrefab[enemyIndex], GenerateEnemySpawnPos() , enemyPrefab[enemyIndex].transform.rotation);
         }
         //Increases the enemies to spawn everytime a round ends
         enemyNum++;
