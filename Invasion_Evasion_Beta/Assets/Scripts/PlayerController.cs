@@ -9,10 +9,11 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     public UIManager uiManagerScript;
 
-    
+    //Particles for player
     public ParticleSystem engineParticle;
     public ParticleSystem explosionParticle;
 
+    //sounds for player
     private AudioSource playerAudio;
     public AudioClip shootingSound;
     public AudioClip explosionSound;
