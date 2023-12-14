@@ -9,8 +9,14 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     public UIManager uiManagerScript;
 
+    
     public ParticleSystem engineParticle;
     public ParticleSystem explosionParticle;
+
+    private AudioSource playerAudio;
+    public AudioClip shootingSound;
+    public AudioClip explosionSound;
+    public AudioClip healSound;
 
 
     //Movement and bounds
@@ -36,6 +42,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         mainCam = FindObjectOfType<Camera>();
         uiManagerScript = GameObject.Find("UI Manager").GetComponent<UIManager>();
+        playerAudio = GetComponent<AudioSource>();
 
         engineParticle.Play();
 
@@ -57,13 +64,16 @@ public class PlayerController : MonoBehaviour
         //If space pressed then shoot projectile.
         if (Input.GetKeyDown(KeyCode.Space))
         {
- 
+           
+
             // Instantiate the projectile from the player's position and in the direction the player is facing
             GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
 
             // Apply force to the projectile in the forward direction of the player
             Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
             projectileRb.AddForce(transform.forward * projectileSpeed, ForceMode.Impulse);
+
+            playerAudio.PlayOneShot(shootingSound, 1.0f);
         }
     }
 
@@ -122,7 +132,9 @@ public class PlayerController : MonoBehaviour
             //Destroys powerup prefab from scene
             Destroy(other.gameObject);
             //If health is less than 3, add to the health when picking up a powerup
-            if (health <3) {
+            if (health <3)
+            {
+                playerAudio.PlayOneShot(healSound);
                 health++;
             }
             //Starts a countdown of 15 seconds from PowerupCoroutine.
@@ -146,6 +158,7 @@ public class PlayerController : MonoBehaviour
             {
                 //destroy game object
                 explosionParticle.Play();
+                playerAudio.PlayOneShot(explosionSound, 1.0f);
 
                 StartCoroutine(DeathAfterExplosionDuration());
             }
@@ -158,11 +171,13 @@ public class PlayerController : MonoBehaviour
             health = 0;
 
             //if health = 0
-            
-                //destroy game object
-                Destroy(gameObject);
-                uiManagerScript.gameOver();
-            
+
+            //destroy game object
+            explosionParticle.Play();
+            playerAudio.PlayOneShot(explosionSound, 1.0f);
+
+            StartCoroutine(DeathAfterExplosionDuration());
+
         }
     }
 
