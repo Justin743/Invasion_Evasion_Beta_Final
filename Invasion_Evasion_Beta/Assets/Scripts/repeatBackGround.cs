@@ -17,6 +17,7 @@ public class repeatBackGround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //sets position of the background back to startPos if it goes to -60
         if (transform.position.x < startPos.x -60) 
         {
             transform.position = startPos;

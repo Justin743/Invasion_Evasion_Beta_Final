@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
 
     public int waveNum = 0;
     public int enemyNum = 4;
-    //public int currentRound = 0;
+
     public int enemyCount;
     public int powerUpCount;
 
@@ -28,7 +28,6 @@ public class SpawnManager : MonoBehaviour
     public bool isBossRound = false;
 
     public bool isGameActive;
-    // Start is called before the first frame update
 
     void Start()
     {
@@ -41,12 +40,10 @@ public class SpawnManager : MonoBehaviour
         {
             //Calls SpawnEnemyWave method initially
             SpawnEnemyWave(enemyNum);
-           
         }
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Counts how many enemies are currenlty spawned

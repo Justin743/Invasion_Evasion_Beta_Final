@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    
     //importing UImanager for score
     private UIManager uiManagerScript;
     public float speed = 2.0f;
@@ -20,31 +19,25 @@ public class Enemy : MonoBehaviour
     private AudioSource enemyAudio;
     public AudioClip explosionSound;
 
-    // Start is called before the first frame update
     void Start()
     {
         enemyRB = GetComponent<Rigidbody>();
+
         player = GameObject.Find("Player");
         //Finds the UI manager script 
         uiManagerScript = GameObject.Find("UI Manager").GetComponent<UIManager>();
+
         enemyAudio = GetComponent<AudioSource>();
 
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-        //Enemy movment
-       // Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-
+        //Movement of enemy(rotation + movment)
         transform.LookAt(player.transform);
 
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
-        
-
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -56,7 +49,7 @@ public class Enemy : MonoBehaviour
             //if health = 0
             if (health <= 0)
             {
-                //Destroy the enemy when it health = 0
+                //Plays the particles, audio and starts destroyEnemyCountDown
                 explosionParticle.Play();
                 enemyAudio.PlayOneShot(explosionSound, 1.0f);
                 StartCoroutine(destroyEnemyCountDown());
@@ -67,11 +60,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //Gives enemy time to play particles and audio before being destroyed.
     IEnumerator destroyEnemyCountDown()
     {
-        //waits for 15 seconds and sets powerup to false.
         yield return new WaitForSeconds(0.2f);
         Destroy(gameObject);
+        //Updates the score
         uiManagerScript.UpdateScore(5);
     }
 }

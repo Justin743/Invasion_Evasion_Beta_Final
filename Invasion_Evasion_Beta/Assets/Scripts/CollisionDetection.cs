@@ -6,13 +6,11 @@ public class CollisionDetection : MonoBehaviour
 {
     private Enemy enemyScript;
     
-    // Start is called before the first frame update
     void Start()
     {
         enemyScript = GameObject.Find("Enemy").GetComponent<Enemy>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -22,6 +20,7 @@ public class CollisionDetection : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player")) 
         {
+            //Destroy if collide with player
             Destroy(gameObject);
         }
     } 

@@ -39,8 +39,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+
         mainCam = FindObjectOfType<Camera>();
+
         uiManagerScript = GameObject.Find("UI Manager").GetComponent<UIManager>();
+
         playerAudio = GetComponent<AudioSource>();
 
         engineParticle.Play();
@@ -121,7 +124,6 @@ public class PlayerController : MonoBehaviour
     {
         //If collide with powerup sets powerup to true
         if (other.CompareTag("Powerup"))
-            
         {
             hasPowerup = true;
             //Destroys powerup prefab from scene
@@ -129,10 +131,11 @@ public class PlayerController : MonoBehaviour
             //If health is less than 3, add to the health when picking up a powerup
             if (health <3)
             {
+                //Plays a healing sound
                 playerAudio.PlayOneShot(healSound);
                 health++;
             }
-            //Starts a countdown of 15 seconds from PowerupCoroutine.
+            
             StartCoroutine(PowerupCountdownRoutine());
             
         }
@@ -142,8 +145,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //if you collide with gameobject of tag "Enemy"
-        if (collision.gameObject.CompareTag("Enemy"))
-            
+        if (collision.gameObject.CompareTag("Enemy"))    
         {
             //take 1 from the health
             health--;
@@ -151,8 +153,9 @@ public class PlayerController : MonoBehaviour
             //if health = 0
             if (health <= 0)
             {
-                //destroy game object
+               
                 health = 0;
+                //explosion particle and audio when destroyed
                 explosionParticle.Play();
                 playerAudio.PlayOneShot(explosionSound, 1.0f);
 
@@ -163,10 +166,9 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Boss"))
         {
-            //take 1 from the health
+            //Sets health to 0 if collision with boss is detected
             health = 0;
 
-            //if health = 0
             explosionParticle.Play();
             playerAudio.PlayOneShot(explosionSound, 1.0f);
 
@@ -187,6 +189,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(explosionParticle.main.duration);
         Destroy(gameObject);
+        //Game over method to display restart and game over
         uiManagerScript.gameOver();
     }
 }

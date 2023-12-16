@@ -21,16 +21,21 @@ public class BossBehaviour : MonoBehaviour
     void Start()
     {
         enemyRB = GetComponent<Rigidbody>();
+
         player = GameObject.Find("Player");
+
         //Finds the UI manager script 
         uiManagerScript = GameObject.Find("UI Manager").GetComponent<UIManager>();
+
         bossAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Sets the rotation for boss to face the player
         transform.LookAt(player.transform);
+        //Boss moves towards player based on its rotation
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
     private void OnTriggerEnter(Collider other)
@@ -53,6 +58,7 @@ public class BossBehaviour : MonoBehaviour
         }
     }
 
+    //gives boss time to play particles and sound before blowing up
     IEnumerator destroyEnemyCountDown()
     {
         yield return new WaitForSeconds(0.2f);

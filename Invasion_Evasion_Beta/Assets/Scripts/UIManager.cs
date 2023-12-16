@@ -33,23 +33,18 @@ public class UIManager : MonoBehaviour
     //Link to GitHub repository
     private string URL = "https://github.com/Justin743/Invasion_Evasion_Beta_Final";
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         //Imports PlayerController and SpawnManager scripts
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-       
-
+      
         //sets score to 0 at start 
         score = 0;
         ScoreText.text = "Score : " + score;
         UpdateScore(0);
     }
 
-    // Update is called once per frame
     void Update()
     {
        
@@ -92,10 +87,12 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    //Normal difficulty, player has more health and enemies are easier
     public void NormalMode()
     {
         SceneManager.LoadScene("Scene1");
     }
+    //Harder mode, player has less health and stronger enemies
     public void HardMode()
     {
         SceneManager.LoadScene("Scene2");
@@ -115,9 +112,6 @@ public class UIManager : MonoBehaviour
         roundText.gameObject.SetActive(true);
         ScoreText.gameObject.SetActive(true);
         player.gameObject.SetActive(true);
-        
-
-       
     }
 
     //Loads the github repository webpage when the "GitHub Link" button is pressed
