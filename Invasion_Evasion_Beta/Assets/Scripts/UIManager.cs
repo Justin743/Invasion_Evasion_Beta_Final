@@ -13,19 +13,24 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI gameOverText;
     public TextMeshProUGUI titleText;
+    public TextMeshProUGUI difficultyText;
 
     public GameObject player;
-    
+
+    //Sounds for the game over
+    private AudioSource gameOverAudio;
+    public AudioClip gameOverSound;
 
     private PlayerController playerController;
     private SpawnManager spawnManager;
 
-    private int roundNum;
+    private int round;
     private int health;
     private int score;
 
     public Button restartButton;
     public Button StartButton;
+    public Button difficultyButton;
     public bool isGameActive = false;
 
     public Button urlButton;
@@ -40,6 +45,7 @@ public class UIManager : MonoBehaviour
         //Imports PlayerController and SpawnManager scripts
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        gameOverAudio = GetComponent<AudioSource>();
 
         //sets score to 0 at start 
         score = 0;
@@ -51,7 +57,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
        
-       UpdateRoundNumber();
+       
     }
     //UpdateHealth Method
     public void UpdateHealth(int newHealth)
@@ -61,9 +67,9 @@ public class UIManager : MonoBehaviour
         healthText.text = "Health : " + health;
     }
     //Updates the round number in the HUD if a player progresses through a wave of enemies
-    public void UpdateRoundNumber()
+    public void UpdateRoundNumber(int roundNum)
     {
-        roundNum = spawnManager.waveNum;
+        round = roundNum;
         roundText.text = "Round " + roundNum;
         
     }
@@ -77,16 +83,32 @@ public class UIManager : MonoBehaviour
 
     //GameOver triggered when the players health reaches 0
     //Game over text and a restart button are set active
-    public void gameOver() { 
+    public void gameOver() {
+
         gameOverText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
         player.gameObject.SetActive(false);
+        
+
+        if(restartButton == true)
+        {
+            gameOverAudio.PlayOneShot(gameOverSound, 1.0f);
+        }
 
     }
 
     //Loads the scene back to the beginning when restart is clicked
     public void restartGame() { 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void NormalMode()
+    {
+        SceneManager.LoadScene("Scene1");
+    }
+    public void HardMode()
+    {
+        SceneManager.LoadScene("Scene2");
     }
     //Starts the game when the start game button is clicked
     //The title, start button and github link are set to inactive
@@ -95,12 +117,15 @@ public class UIManager : MonoBehaviour
     {
         isGameActive = true;
         titleText.gameObject.SetActive(false);
+        difficultyText.gameObject.SetActive(false);
         urlButton.gameObject.SetActive(false);
         StartButton.gameObject.SetActive(false);
+        difficultyButton.gameObject.SetActive(false);
         healthText.gameObject.SetActive(true);
         roundText.gameObject.SetActive(true);
         ScoreText.gameObject.SetActive(true);
         player.gameObject.SetActive(true);
+        
 
        
     }

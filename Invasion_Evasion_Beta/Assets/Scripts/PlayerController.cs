@@ -18,8 +18,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip shootingSound;
     public AudioClip explosionSound;
     public AudioClip healSound;
-
-
+   
     //Movement and bounds
     public float horizontalInput;
     public float verticalInput;
@@ -37,7 +36,6 @@ public class PlayerController : MonoBehaviour
     //Players health
     public int health = 3;
 
-
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -46,8 +44,6 @@ public class PlayerController : MonoBehaviour
         playerAudio = GetComponent<AudioSource>();
 
         engineParticle.Play();
-
-
     }
     void Update()
     {
@@ -65,8 +61,6 @@ public class PlayerController : MonoBehaviour
         //If space pressed then shoot projectile.
         if (Input.GetKeyDown(KeyCode.Space))
         {
-           
-
             // Instantiate the projectile from the player's position and in the direction the player is facing
             GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
 
