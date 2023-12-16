@@ -17,10 +17,6 @@ public class UIManager : MonoBehaviour
 
     public GameObject player;
 
-    //Sounds for the game over
-    private AudioSource gameOverAudio;
-    public AudioClip gameOverSound;
-
     private PlayerController playerController;
     private SpawnManager spawnManager;
 
@@ -35,7 +31,7 @@ public class UIManager : MonoBehaviour
 
     public Button urlButton;
     //Link to GitHub repository
-    private string URL = "https://github.com/Justin743/Invasion_Evasion_Alpha";
+    private string URL = "https://github.com/Justin743/Invasion_Evasion_Beta_Final";
 
 
 
@@ -45,7 +41,7 @@ public class UIManager : MonoBehaviour
         //Imports PlayerController and SpawnManager scripts
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        gameOverAudio = GetComponent<AudioSource>();
+       
 
         //sets score to 0 at start 
         score = 0;
@@ -83,17 +79,11 @@ public class UIManager : MonoBehaviour
 
     //GameOver triggered when the players health reaches 0
     //Game over text and a restart button are set active
-    public void gameOver() {
+    public void gameOver() { 
 
         gameOverText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
         player.gameObject.SetActive(false);
-        
-
-        if(restartButton == true)
-        {
-            gameOverAudio.PlayOneShot(gameOverSound, 1.0f);
-        }
 
     }
 
