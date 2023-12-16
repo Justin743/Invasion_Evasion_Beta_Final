@@ -158,6 +158,7 @@ public class PlayerController : MonoBehaviour
             if (health <= 0)
             {
                 //destroy game object
+                health = 0;
                 explosionParticle.Play();
                 playerAudio.PlayOneShot(explosionSound, 1.0f);
 
@@ -172,8 +173,6 @@ public class PlayerController : MonoBehaviour
             health = 0;
 
             //if health = 0
-
-            //destroy game object
             explosionParticle.Play();
             playerAudio.PlayOneShot(explosionSound, 1.0f);
 

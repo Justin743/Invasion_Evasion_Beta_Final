@@ -1846,7 +1846,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a54b8bcaa13d71408b5df8c5e68964c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7714917265872081704, guid: 7bdd93dcefc09d44eb5a6f10afea546b, type: 3}
+  enemyPrefab:
+  - {fileID: 3155847984436618001, guid: 5b3297a9ecd0adb43a4b8cff177aa250, type: 3}
+  - {fileID: 7892187193290075249, guid: 8f63871df3a7b3a49854f52dbabc6b76, type: 3}
   powerUpPrefab: {fileID: 1652122310850213093, guid: c5416731dfcc1ed4191725adc2a542c3, type: 3}
   uiManager: {fileID: 0}
   waveNum: 1
@@ -1854,7 +1856,7 @@ MonoBehaviour:
   currentRound: 1
   enemyCount: 0
   powerUpCount: 0
-  bossEnemy: {fileID: 4580312467712684332, guid: 2c9a58b75bbc63e44a47c6e7d2d88c3d, type: 3}
+  bossEnemy: {fileID: 5390658716837680401, guid: 684e7d90a5d15d846a7ec500ec3780fa, type: 3}
   bossCount: 0
   isBossRound: 0
   isGameActive: 0

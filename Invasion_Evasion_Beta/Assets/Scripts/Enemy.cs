@@ -12,7 +12,14 @@ public class Enemy : MonoBehaviour
     public int health = 2;
     private Rigidbody enemyRB;
     private GameObject player;
-    
+
+    //Particle for the enemy
+    public ParticleSystem explosionParticle;
+
+    //Sounds for the enemy
+    private AudioSource enemyAudio;
+    public AudioClip explosionSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +27,9 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
         //Finds the UI manager script 
         uiManagerScript = GameObject.Find("UI Manager").GetComponent<UIManager>();
+        enemyAudio = GetComponent<AudioSource>();
 
-        
+
     }
 
     // Update is called once per frame
@@ -49,13 +57,21 @@ public class Enemy : MonoBehaviour
             if (health <= 0)
             {
                 //Destroy the enemy when it health = 0
-                Destroy(gameObject);
-                //update score when enemy is destroyed
-                uiManagerScript.UpdateScore(5);
+                explosionParticle.Play();
+                enemyAudio.PlayOneShot(explosionSound, 1.0f);
+                StartCoroutine(destroyEnemyCountDown());
             }
 
             //Destroy the bullet when it hits the enemy
             Destroy(other.gameObject);
         }
+    }
+
+    IEnumerator destroyEnemyCountDown()
+    {
+        //waits for 15 seconds and sets powerup to false.
+        yield return new WaitForSeconds(0.2f);
+        Destroy(gameObject);
+        uiManagerScript.UpdateScore(5);
     }
 }
